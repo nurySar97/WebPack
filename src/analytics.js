@@ -1,8 +1,7 @@
-function createAnalytics() {
+export default function createAnalytics() {
     let counter = 0;
     let isDestroyed = false;
-
-
+    
     const listener = () => counter++
 
     document.addEventListener('click', listener)
@@ -20,5 +19,3 @@ function createAnalytics() {
         }
     }
 }
-
-window.analytics = createAnalytics()
