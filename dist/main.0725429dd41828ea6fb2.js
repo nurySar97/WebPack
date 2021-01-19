@@ -16,17 +16,7 @@
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Post\n/* harmony export */ });\nclass Post {\r\n    constructor(title) {\r\n        this.title = title\r\n        this.date = new Date()\r\n    }\r\n    toString() {\r\n        return JSON.stringify({\r\n            title: this.title,\r\n            date: this.date.toJSON()\r\n        })\r\n    }\r\n}\n\n//# sourceURL=webpack://webpack-course-2021/./src/Post.js?");
-
-/***/ }),
-
-/***/ "./src/analytics.js":
-/*!**************************!*\
-  !*** ./src/analytics.js ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ createAnalytics\n/* harmony export */ });\nfunction createAnalytics() {\r\n    let counter = 0;\r\n    let isDestroyed = false;\r\n    \r\n    const listener = () => counter++\r\n\r\n    document.addEventListener('click', listener)\r\n\r\n    return {\r\n        destroy(){\r\n            document.removeEventListener('click', listener)\r\n            isDestroyed = true\r\n        },\r\n        getClicks(){\r\n            if(isDestroyed){\r\n                return 'Analytics is destroyed'\r\n            }\r\n            return counter\r\n        }\r\n    }\r\n}\n\n//# sourceURL=webpack://webpack-course-2021/./src/analytics.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Post\n/* harmony export */ });\nclass Post {\r\n    constructor(title) {\r\n        this.title = title\r\n        this.date = new Date()\r\n    }\r\n    toString() {\r\n        return JSON.stringify({\r\n            title: this.title,\r\n            date: this.date.toJSON()\r\n        })\r\n    }\r\n\r\n    get upperCaseTitle(){\r\n        return this.title.toUpperCase()\r\n    }\r\n};\n\n//# sourceURL=webpack://webpack-course-2021/./src/Post.js?");
 
 /***/ }),
 
@@ -36,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ \"./src/Post.js\");\n/* harmony import */ var _analytics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./analytics */ \"./src/analytics.js\");\n\r\n\r\n\r\nconst post = new _Post__WEBPACK_IMPORTED_MODULE_0__.default('Webpack Post Title')\r\n\r\nconsole.log('Post To String: ', post.toString())\r\n\r\nwindow.analytics = (0,_analytics__WEBPACK_IMPORTED_MODULE_1__.default)()\n\n//# sourceURL=webpack://webpack-course-2021/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ \"./src/Post.js\");\n\r\n\r\nconst post = new _Post__WEBPACK_IMPORTED_MODULE_0__.default('Webpack Post Title');\r\n\r\nconsole.log('Post To String: ', post.toString());\n\n//# sourceURL=webpack://webpack-course-2021/./src/index.js?");
 
 /***/ })
 

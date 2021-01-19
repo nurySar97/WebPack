@@ -1,4 +1,4 @@
-export default function createAnalytics() {
+function createAnalytics() {
     let counter = 0;
     let isDestroyed = false;
     
@@ -13,9 +13,12 @@ export default function createAnalytics() {
         },
         getClicks(){
             if(isDestroyed){
-                return 'Analytics is destroyed'
+                return `Analytics is destroyed. Total clicks = ${counter}`
             }
             return counter
         }
     }
 }
+
+
+window.analytics = createAnalytics()
