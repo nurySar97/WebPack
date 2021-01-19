@@ -1,3 +1,9 @@
+@import 'roboto.css';
+
+body {
+    font-family: 'Roboto Bold';
+}
+
 *,
 ::after,
 ::before {
