@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-
 module.exports = {
     context: path.resolve(__dirname, 'src'),
 
@@ -30,6 +29,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ['file-loader']
             }
         ]
     }

@@ -10,11 +10,19 @@
     width: 100%;
     margin-top: 1rem;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 50px auto;
     text-align: center;
     background-color: cornflowerblue;
 }
 
 h1 {
     text-align: center;
+}
+
+.logo {
+    background-image: url("../assets/webpack-logo.png");
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto;
 }
