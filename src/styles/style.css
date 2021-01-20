@@ -1,7 +1,7 @@
 @import 'roboto.css';
-
+@import "~normalize.css";
 body {
-    font-family: 'Roboto Bold';
+    font-family: 'Roboto Thin';
 }
 
 *,

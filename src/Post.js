@@ -4,6 +4,7 @@ export default class Post {
         this.date = new Date()
         this.image = image
     }
+    
     toString() {
         return JSON.stringify({
             title: this.title,
