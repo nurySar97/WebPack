@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -18,7 +19,7 @@ module.exports = {
     },
     // here you can show file extension an the you can import not showing file extension
     resolve: {
-        extensions: ['.js', '.json', '.xml', '.png', '.csv', '.css' ],
+        extensions: ['.js', '.json', '.xml', '.png', '.csv', '.css'],
         alias: {
             '@models': path.resolve(__dirname, 'src/models'),
             '@': path.resolve(__dirname, 'src')
@@ -30,12 +31,23 @@ module.exports = {
             chunks: 'all'
         }
     },
+    devServer: {
+        port: 4200
+    },
     // Plugins Clean and HTML
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/favicon.ico'),
+                    to: path.resolve(__dirname, 'dist')
+                }
+            ]
+        })
     ],
     // Here you can show webpack loaders
     module: {

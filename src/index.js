@@ -8,10 +8,10 @@ import * as $ from 'jquery';
 
 const post = new Post('Webpack Post Title', Webpack);
 
-$('pre').addClass('code').html(post.toString())
+$('.json').addClass('post').html(post.toString())
 
 console.log('Post To String: ', post.toString(), " This is index.js");
 
 console.log('JSON: ', json);
 console.log('XML: ', xml);
-console.log('CSV: ', csv);
+console.log('CSV: ', csv, "Hello"); 
