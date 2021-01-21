@@ -4,8 +4,11 @@ import json from '@/assets/json';
 import Webpack from '@/assets/webpack-logo';
 import xml from '@/assets/dataXML';
 import csv from '@/assets/dataCSV';
+import * as $ from 'jquery';
 
 const post = new Post('Webpack Post Title', Webpack);
+
+$('pre').addClass('code').html(post.toString())
 
 console.log('Post To String: ', post.toString(), " This is index.js");
 
