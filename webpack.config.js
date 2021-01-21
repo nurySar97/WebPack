@@ -2,6 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+
+const isDev = process.env.NODE_ENV === 'development';
+console.log(isDev)
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -37,7 +42,10 @@ module.exports = {
     // Plugins Clean and HTML
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html'
+            template: './index.html',
+            minify: {
+                collapseWhitespace: !isDev
+            }
         }),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
@@ -47,6 +55,10 @@ module.exports = {
                     to: path.resolve(__dirname, 'dist')
                 }
             ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].css'
         })
     ],
     // Here you can show webpack loaders
@@ -54,7 +66,17 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: (resourcePath, context) => {
+                                return path.relative(path.dirname(resourcePath), context) + '/';
+                            }
+                        },
+                    },
+                    'css-loader'
+                ]
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
