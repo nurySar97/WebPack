@@ -10,12 +10,20 @@ module.exports = {
         analytics: './analytics.js'
     },
 
+    mode: "development",
+
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
 
-    mode: "development",
+    resolve: {
+        extensions: ['.js', '.json', '.xml', '.png', '.csv', '.css' ],
+        alias: {
+            '@models': path.resolve(__dirname, 'src/models'),
+            '@': path.resolve(__dirname, 'src')
+        }
+    },
 
     plugins: [
         new HtmlWebpackPlugin({
