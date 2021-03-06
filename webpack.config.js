@@ -3,10 +3,29 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 
 const isDev = process.env.NODE_ENV === 'development';
-console.log(isDev)
+const isProd = !isDev
+
+const optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: 'all'
+        }
+    }
+    if(isProd){
+        config.minimizer = [
+            new OptimizeCssAssetsPlugin(),
+            new TerserPlugin()
+        ]
+    }
+
+    return config
+}
+// Here
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -31,11 +50,7 @@ module.exports = {
         }
     },
     // this optimization won't let to boiler plate for example double time use jquery in analytics.js an main.js
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        }
-    },
+    optimization: optimization(),
     devServer: {
         port: 4200
     },
@@ -59,7 +74,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             chunkFilename: '[id].css'
-        })
+        }),
+        new OptimizeCssAssetsPlugin(),
+        new TerserPlugin()
     ],
     // Here you can show webpack loaders
     module: {
@@ -76,6 +93,21 @@ module.exports = {
                         },
                     },
                     'css-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: (resourcePath, context) => {
+                                return path.relative(path.dirname(resourcePath), context) + '/';
+                            }
+                        },
+                    },
+                    'css-loader',
+                    'less-loader'
                 ]
             },
             {
