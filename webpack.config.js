@@ -8,7 +8,25 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 
 const isDev = process.env.NODE_ENV === 'development';
-const isProd = !isDev
+const isProd = !isDev;
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`;
+
+const cssLoaders = (text, loader) => {
+    return ({
+        test: text,
+        use: [
+            {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    publicPath: (resourcePath, context) => {
+                        return path.relative(path.dirname(resourcePath), context) + '/';
+                    }
+                },
+            },
+            ...(!loader ? ['css-loader'] : ['css-loader', loader])
+        ]
+    })
+}
 
 const optimization = () => {
     const config = {
@@ -16,7 +34,7 @@ const optimization = () => {
             chunks: 'all'
         }
     }
-    if(isProd){
+    if (isProd) {
         config.minimizer = [
             new OptimizeCssAssetsPlugin(),
             new TerserPlugin()
@@ -38,7 +56,7 @@ module.exports = {
     mode: "development",
     // here you can set output files name for example hash, id ...etc
     output: {
-        filename: '[name].[contenthash].js',
+        filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
     },
     // here you can show file extension an the you can import not showing file extension
@@ -72,7 +90,7 @@ module.exports = {
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
+            filename: filename('css'),
             chunkFilename: '[id].css'
         }),
         new OptimizeCssAssetsPlugin(),
@@ -81,35 +99,9 @@ module.exports = {
     // Here you can show webpack loaders
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: (resourcePath, context) => {
-                                return path.relative(path.dirname(resourcePath), context) + '/';
-                            }
-                        },
-                    },
-                    'css-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: (resourcePath, context) => {
-                                return path.relative(path.dirname(resourcePath), context) + '/';
-                            }
-                        },
-                    },
-                    'css-loader',
-                    'less-loader'
-                ]
-            },
+            cssLoaders(/\.css$/),
+            cssLoaders(/\.less$/, 'less-loader'),
+            cssLoaders(/\.s[ac]ss$/, 'sass-loader'),
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: ['file-loader']
