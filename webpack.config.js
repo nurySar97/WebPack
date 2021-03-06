@@ -23,7 +23,8 @@ const cssLoaders = (text, loader) => {
                     }
                 },
             },
-            ...(!loader ? ['css-loader'] : ['css-loader', loader])
+            'css-loader',
+            ...(!loader ? [] : [loader])
         ]
     })
 }
@@ -49,7 +50,7 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     // Entry files
     entry: {
-        main: './index.js',
+        main: ['@babel/polyfill','./index.js'],
         analytics: './analytics.js'
     },
     // mode can be dev or prod
@@ -117,7 +118,18 @@ module.exports = {
             {
                 test: /\.csv$/,
                 use: ['csv-loader']
-            }
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader",
+                  options: {
+                    presets: ['@babel/preset-env'],
+                    plugins: ['@babel/plugin-proposal-class-properties']
+                  }
+                }
+              }
         ]
     }
 };

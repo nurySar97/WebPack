@@ -2,6 +2,7 @@ import Post from '@models/Post';
 import '@/styles/style';
 import json from '@/assets/json';
 import Webpack from '@/assets/webpack-logo';
+import "./babel";
 import xml from '@/assets/dataXML';
 import csv from '@/assets/dataCSV';
 import * as $ from 'jquery';
