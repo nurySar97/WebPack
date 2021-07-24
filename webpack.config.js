@@ -52,7 +52,7 @@ module.exports = {
     // Entry files
     entry: {
         main: ['@babel/polyfill', './index.js'],
-        analytics: './analytics.js',
+        analytics: './analytics.jsx',
         app: './app.ts'
     },
     // mode can be dev or prod
@@ -141,6 +141,20 @@ module.exports = {
                         presets: [
                             '@babel/preset-env',
                             "@babel/preset-typescript"
+                        ],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            '@babel/preset-env',
+                            "@babel/preset-react"
                         ],
                         plugins: ['@babel/plugin-proposal-class-properties']
                     }
