@@ -47,11 +47,13 @@ const optimization = () => {
 // Here
 
 module.exports = {
+    // Main content
     context: path.resolve(__dirname, 'src'),
     // Entry files
     entry: {
-        main: ['@babel/polyfill','./index.js'],
-        analytics: './analytics.js'
+        main: ['@babel/polyfill', './index.js'],
+        analytics: './analytics.js',
+        app: './app.ts'
     },
     // mode can be dev or prod
     mode: "development",
@@ -123,13 +125,27 @@ module.exports = {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                  loader: "babel-loader",
-                  options: {
-                    presets: ['@babel/preset-env'],
-                    plugins: ['@babel/plugin-proposal-class-properties']
-                  }
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
                 }
-              }
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            '@babel/preset-env',
+                            "@babel/preset-typescript"
+                        ],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
+            }
         ]
     }
 };
